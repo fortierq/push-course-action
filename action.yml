@@ -23,11 +23,10 @@ runs:
   steps:
     - shell: bash
       run: |
-        REPO=${{ inputs.repo }}
         USER=${{ inputs.user }}
         TOKEN=${{ inputs.token }}
         CLONE_DIR=$(mktemp -d)
-        git clone "https://$USER:$TOKEN@github.com/$USER/$REPO.git" "$CLONE_DIR"
+        git clone "https://$USER:$TOKEN@github.com/$USER/$repo.git" "$CLONE_DIR"
         rm -rf "$CLONE_DIR/files"
         img() {
             img=$(dirname "$file")/img
@@ -74,5 +73,5 @@ runs:
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
-        git commit -m ${{ inputs.message }}
-        git push "https://$USER:$TOKEN@github.com/$USER/$REPO.git" --set-upstream main
+        git commit -m "$message"
+        git push "https://$USER:$TOKEN@github.com/$USER/$repo.git" --set-upstream main
