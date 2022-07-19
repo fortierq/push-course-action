@@ -8,7 +8,9 @@ inputs:
   repo:
     description: 'Destination repository'
     required: true
-  
+  GITHUB_TOKEN:
+    description: 'Github token'
+    required: true
 runs:
   using: 'composite'
   steps:
