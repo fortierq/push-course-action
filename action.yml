@@ -18,7 +18,7 @@ runs:
         CLONE_DIR=$(mktemp -d)
         git config --global user.email "qpfortier@gmail.com"
         git config --global user.name "Quentin Fortier"
-        git clone "https://fortierq:${{ secrets.GITHUB_TOKEN }}@github.com/$REPO.git" "$CLONE_DIR"
+        git clone "https://fortierq:${{ inputs.GITHUB_TOKEN }}@github.com/$REPO.git" "$CLONE_DIR"
         rm -rf "$CLONE_DIR/files"
         img() {
             img=$(dirname "$file")/img
@@ -64,4 +64,4 @@ runs:
         cd "$CLONE_DIR"
         git add .
         git commit -m "${{ github.event.head_commit.message }}"
-        git push "https://fortierq:${{ secrets.GITHUB_TOKEN }}@github.com/$REPO.git" --set-upstream main
+        git push "https://fortierq:${{ inputs.GITHUB_TOKEN }}@github.com/$REPO.git" --set-upstream main
