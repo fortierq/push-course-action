@@ -23,8 +23,6 @@ runs:
         USER=${{ inputs.user }}
         TOKEN=${{ inputs.token }}
         CLONE_DIR=$(mktemp -d)
-        git config user.name 'github-actions[bot]'
-        git config user.email 'github-actions[bot]@users.noreply.github.com'
         git clone "https://$USER:$TOKEN@github.com/$USER/$REPO.git" "$CLONE_DIR"
         rm -rf "$CLONE_DIR/files"
         img() {
@@ -69,6 +67,8 @@ runs:
         done < cor.txt
 
         cd "$CLONE_DIR"
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
         git commit -m "${{ github.event.head_commit.message }}"
         git push "https://$USER:$TOKEN@github.com/$USER/$REPO.git" --set-upstream main
