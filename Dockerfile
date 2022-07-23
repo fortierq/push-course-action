@@ -1,4 +1,4 @@
-FROM qfortier/jupyter:debian
+FROM qfortier/jupyter:alpine
 
 COPY entrypoint.sh /entrypoint.sh
 
