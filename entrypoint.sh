@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 REPO=$2
 TOKEN=$3
