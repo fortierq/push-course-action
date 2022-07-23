@@ -27,26 +27,26 @@ runs:
         USER=${{ inputs.user }}
         TOKEN=${{ inputs.token }}
         CLONE_DIR=$(mktemp -d)
-        git clone "https://$USER:$TOKEN@github.com/$USER/$REPO.git" "$CLONE_DIR"
-        rm -rf "$CLONE_DIR/files"
-        
+        git clone "https://$USER:$TOKEN@github.com/$USER/$REPO.git" $CLONE_DIR
+        rm -rf $CLONE_DIR/files
+
         img() {
-            img=$(dirname "$file")/img
+            img=$(dirname $file)/img
             if [ -d $img ]; then
-              cp -r $img "$CLONE_DIR/"$(dirname "$file")
+              cp -r $img $CLONE_DIR/$(dirname $file)
             fi
         }
 
         ipynb() {
-          mkdir -p "$CLONE_DIR/"$(dirname "$file")
+          mkdir -p "$CLONE_DIR/"$(dirname $file)
           img
           if [[ $file == *.ipynb ]]; then
-            jupyter nbconvert "$file" --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
+            jupyter nbconvert $file --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
             --TagRemovePreprocessor.enabled=True \
             --TagRemovePreprocessor.remove_input_tags hide \
             --TagRemovePreprocessor.remove_cell_tags cor
           else
-            cp $file "$CLONE_DIR/"$(dirname "$file")
+            cp $file "$CLONE_DIR/"$(dirname $file)
           fi
         }
 
@@ -54,7 +54,7 @@ runs:
           img
           cor=${file%.*}_cor.${file#*.}
           rm -f "$CLONE_DIR/$file"
-          jupyter nbconvert "$file" --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
+          jupyter nbconvert $file --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
           --TagRemovePreprocessor.enabled=True \
           --TagRemovePreprocessor.remove_input_tags hide
         }
