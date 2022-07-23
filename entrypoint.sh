@@ -1,3 +1,5 @@
+#!/bin/ash
+
 REPO=$2
 TOKEN=$3
 USER=$4
