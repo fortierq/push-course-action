@@ -21,7 +21,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - shell: ash
+    - shell: bash
       run: |
         REPO=${{ inputs.repo }}
         USER=${{ inputs.user }}
