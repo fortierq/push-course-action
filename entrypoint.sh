@@ -23,11 +23,12 @@ ipynb() {
         --TagRemovePreprocessor.remove_input_tags hide \
         --TagRemovePreprocessor.remove_cell_tags cor
     else
-        cp $file "$CLONE_DIR/"$(dirname $file)
+        cp $file $CLONE_DIR/$(dirname $file)
     fi
 }
 
 ipynb_cor() {
+    mkdir -p $CLONE_DIR/$(dirname $file)
     img
     cor=${file%.*}_cor.${file#*.}
     if [[ $file == *.ipynb ]]; then
@@ -35,7 +36,7 @@ ipynb_cor() {
         --TagRemovePreprocessor.enabled=True \
         --TagRemovePreprocessor.remove_input_tags hide
     else
-        cp $file "$CLONE_DIR/"$(dirname $file)
+        cp $file $CLONE_DIR/$(dirname $file)
     fi
 }
 
@@ -47,7 +48,6 @@ while read file; do
 done < student.txt
 
 while read file; do
-    cor=${file%.*}_cor.${file#*.}
     if [ ! -f $CLONE_DIR/$file ]; then
         ipynb_cor
     fi
