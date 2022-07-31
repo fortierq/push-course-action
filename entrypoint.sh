@@ -15,42 +15,45 @@ img() {
 }
 
 ipynb() {
-    mkdir -p "$CLONE_DIR/"$(dirname $file)
+    mkdir -p $CLONE_DIR/$(dirname $file)
     img
     if [[ $file == *.ipynb ]]; then
-    jupyter nbconvert $file --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
-    --TagRemovePreprocessor.enabled=True \
-    --TagRemovePreprocessor.remove_input_tags hide \
-    --TagRemovePreprocessor.remove_cell_tags cor
+        jupyter nbconvert $file --to ipynb --output $CLONE_DIR/$file --allow-errors \
+        --TagRemovePreprocessor.enabled=True \
+        --TagRemovePreprocessor.remove_input_tags hide \
+        --TagRemovePreprocessor.remove_cell_tags cor
     else
-    cp $file "$CLONE_DIR/"$(dirname $file)
+        cp $file "$CLONE_DIR/"$(dirname $file)
     fi
 }
 
 ipynb_cor() {
     img
     cor=${file%.*}_cor.${file#*.}
-    rm -f "$CLONE_DIR/$file"
-    jupyter nbconvert $file --to ipynb --output "$CLONE_DIR/$file" --allow-errors \
-    --TagRemovePreprocessor.enabled=True \
-    --TagRemovePreprocessor.remove_input_tags hide
+    if [[ $file == *.ipynb ]]; then
+        jupyter nbconvert $file --to ipynb --output $CLONE_DIR/$file --allow-errors \
+        --TagRemovePreprocessor.enabled=True \
+        --TagRemovePreprocessor.remove_input_tags hide
+    else
+        cp $file "$CLONE_DIR/"$(dirname $file)
+    fi
 }
 
 while read file; do
     echo "Processing $file"
-    if [ ! -f "$CLONE_DIR/$file" ]; then
-    ipynb
+    if [ ! -f $CLONE_DIR/$file ]; then
+        ipynb
     fi
 done < student.txt
 
 while read file; do
     cor=${file%.*}_cor.${file#*.}
-    if [ ! -f "$CLONE_DIR/$file" ]; then
-    ipynb_cor
+    if [ ! -f $CLONE_DIR/$file ]; then
+        ipynb_cor
     fi
 done < cor.txt
 
-cd "$CLONE_DIR"
+cd $CLONE_DIR
 git config user.name 'github-actions[bot]'
 git config user.email 'github-actions[bot]@users.noreply.github.com'
 git add .
