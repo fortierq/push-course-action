@@ -5,7 +5,6 @@ TOKEN=$3
 USER=$4
 CLONE_DIR=$(mktemp -d)
 git clone "https://$USER:$TOKEN@github.com/$USER/$REPO.git" $CLONE_DIR
-rm -rf $CLONE_DIR/files
 
 img() {
     img=$(dirname $file)/img
