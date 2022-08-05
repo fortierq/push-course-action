@@ -41,15 +41,11 @@ ipynb_cor() {
 
 while read file; do
     echo "Processing $file"
-    if [ ! -f $CLONE_DIR/$file ]; then
-        ipynb
-    fi
+    ipynb
 done < student.txt
 
 while read file; do
-    if [ ! -f $CLONE_DIR/$file ]; then
-        ipynb_cor
-    fi
+    ipynb_cor
 done < cor.txt
 
 cd $CLONE_DIR
